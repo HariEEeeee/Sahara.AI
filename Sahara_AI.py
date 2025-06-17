@@ -1,4 +1,7 @@
-# User inputs
+import mysql.connector
+from PIL import Image
+
+
 def intro():
     return '''\n
     🏜️Sahara.ai — Where Ideas Bloom Into Pixel Art!
@@ -35,22 +38,61 @@ def intro():
            creations!'''
 
 
-# prompt to pixel art generator
+def image_to_pixelart():
+    # block size
 
-# block size
-def detail_Level():
     block = int(input("Select the level of details:"))
-    instruct = "Choose between 2 - 25, remember the more number you select the detailed your image :"
+    print("Choose between 2 - 25, remember the more number you select the detailed your image :")
+    # height and width
 
-
-# height and width
-def heigt_width():
     height = int(input("Choose the height of the image:"))
     width = int(input("Choose the width of the image:"))
 
+    # here's the code
+    image_from_user = input("Enter the path of the file you want to make pixel art:")
+    img = Image.open(image_from_user)
 
-#def custom_color():
+    pixel_size = img.resize((height, width), resample=Image.BILINEAR)
+
+    resizing = pixel_size.resize(img.size, Image.NEAREST)
+    resizing.show()
+
+
+# log in ??
+secret_code = input("Set your Secret code( press any key to know more ):")
+length_of_SC = len(secret_code)
+if length_of_SC >= 0:
+    intructions = """
+    🔐 Secret Code Instructions
+Enter a secret code using letters, numbers & symbols.
+
+Keep it safe — you'll need it to log in next time.
+
+⚠️ If you forget it, your data cannot be recovered.
+"""
+else:
+    print("Secret code created Successfully :) and remember not to forget it!!")
+    email_id = input("Enter your Secret code:")
+    print(email_id)
+
+#options
+Query = input("What would you like to do? :")
+option1 = "Turn image into Pixel Art"
+option2 ="Create a color palette"
+option3 ="Save a color palette"
+
+if Query == option1:
+    print(image_to_pixelart())
+elif Query == option2:
+
+
+
+#Image to pixel art
+
+
 color_list = []
+# def custom_color():
+
 while True:
     clr = input("Enter the the colours you want (eg:#00000,#:")
     if clr == 'done':
@@ -59,9 +101,18 @@ while True:
         color_list.append(clr)
         print(color_list)
 
-# Wanna save the palette for future use?
-collr_enquiry = "Would you like to save your colour palette?"
-if collr_enquiry in ["yes","Yes","No","no"]:
-    lst_of_col_tobesaved = color_list
+# Saved color palettes
+clr_palette1 = []
 
-# view_image
+
+# prompt to pixel art
+prompt = input("Describe your image:")
+
+# Database Connectivity
+database = mysql.connector.connect(
+    host="localhost",
+    user="hippo",
+    password="Sahara123/"
+)
+Db_cursor = database.cursor()
+Db_cursor.execute("Create Database Sahara_AI")
